@@ -11,7 +11,7 @@ if ! [ -x "/vim-build/bin/$BIN" ]; then
 fi
 
 # Set default vimrc to a visible file
-ARGS="-u /home/vimrc -i NONE"
+ARGS="-i NONE"
 
 # So we can pass the arguments to Vim as it was passed to this script
 while [ $# -gt 0 ]; do
@@ -21,4 +21,4 @@ done
 
 # Run as the vimtest user.  This is not really for security.  It is for running
 # Vim as a user that's unable to write to your volume.
-exec su -l vimtest -c "cd /testplugin && /vim-build/bin/$BIN $ARGS"
+exec su -l vimtest -c "cd /testbed && env VIM_TESTBED=1 /vim-build/bin/$BIN $ARGS"

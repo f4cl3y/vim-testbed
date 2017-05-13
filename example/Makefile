@@ -7,10 +7,12 @@ WRITABLE_HOME:=$(shell tmpdir=$$(mktemp -d --dry-run); \
 	cd $(CURDIR)/test; \
 	cp -a vimrc *.vader $${tmpdir}/; \
 	echo $${tmpdir})
-DOCKER = docker run -a stderr --rm \
-	-v $(CURDIR):/testplugin \
-	-v $(WRITABLE_HOME):/home \
-	-v $(CURDIR)/$(PLUGINS):/home/plugins "$(IMAGE)"
+ TODO: remove/unneeded by now?!
+	# -v $(WRITABLE_HOME):/home/testbed \
+
+DOCKER = docker run -ti --rm \
+	-v $(CURDIR):/testbed \
+	-v $(CURDIR)/$(PLUGINS):/home/testbed/.vim/plugins "$(IMAGE)"
 
 test: test-setup
 	docker build -f Dockerfile.tests -t "$(IMAGE)" .
