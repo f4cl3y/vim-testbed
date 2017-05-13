@@ -191,7 +191,7 @@ build() {
     MAJOR="$(sed -n '/^MAJOR = / s~MAJOR = ~~p' Makefile)"
     if [ "$MAJOR" -lt 8 ]; then
       MINOR="$(sed -n '/^MINOR = / s~MINOR = ~~p' Makefile)"
-      if [ "$MINOR" = "1" ] || [ "${MINOR#0}" != $MINOR ]; then
+      if [ "$MINOR" = "1" ] || [ "${MINOR#0}" != "$MINOR" ]; then
         sed -i 's~sys/time.h termio.h~sys/time.h sys/types.h termio.h~' src/configure.in src/auto/configure
       fi
     fi
@@ -232,6 +232,9 @@ build() {
     VIM_BIN="$INSTALL_PREFIX/bin/vim"
   else
     VIM_BIN="$INSTALL_PREFIX/bin/nvim"
+  fi
+  if ! [ -e "$VIM_BIN" ]; then
+    bail "Binary $VIM_BIN was not created."
   fi
   link_target="/vim-build/bin/$NAME"
   if [ -e "$link_target" ]; then
