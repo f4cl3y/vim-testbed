@@ -7,10 +7,11 @@ DOCKER = docker run -ti --rm \
 	$(if $(TEMPDIR),-v $(TEMPDIR):$(TEMPDIR)) \
 	-v $(CURDIR)/$(PLUGINS):/home/testbed/.vim/plugins "$(IMAGE)"
 
-test: TEMPDIR:=$(shell mktemp -d)
+test: TEMPDIR:=$(shell mktemp -d -u)
 test: test-setup
 	docker build -f Dockerfile.tests -t "$(IMAGE)" .
 	set -ex; \
+	mkdir -m 0777 $(TEMPDIR); \
 	vims="$$(docker run --rm $(IMAGE) ls /vim-build/bin | grep vim)"; \
 	if [ -z "$$vims" ]; then echo "No Vims found!"; exit 1; fi; \
 	count_vims=0; \
