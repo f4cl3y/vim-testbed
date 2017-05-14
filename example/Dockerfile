@@ -1,6 +1,6 @@
 FROM testbed/vim
 
-RUN install_vim -tag v7.1 -name vim71 -build \
+RUN install_vim -tag v7.1 -name vim71 -py2 -build \
                 -tag v7.3.429 -name vim73 -py -build \
                 -tag v7.4.052 -name vim74-trusty -build \
                 -tag master -py2 -py3 -ruby -lua -build \
