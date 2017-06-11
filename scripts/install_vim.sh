@@ -154,6 +154,7 @@ EOF
       ca-certificates \
       cmake \
       g++ \
+      gettext-dev \
       gperf \
       libtool \
       libuv-dev \
